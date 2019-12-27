@@ -1,40 +1,34 @@
 <?php 
+    header("Access-Control-Allow-Oeigin: *");
+    header("Content-Type: application/json; charset=UTF-8");
+
     include_once '../triamrun/connentDB.php';
 
     // $contentdata = file_get_contents("php:://input");
 
-// $statement = $conn->prepare('INSERT INTO recordrunning (recordrunning_hours, recordrunning_min,recordrunning_second)
-//     VALUES (:hours, :min,:second)');
-
-// $statement->execute([
-//     'hours' => 122,
-//     'min' => 20,
-//     'second' => 20,
-// ]);
-
-// $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-// $json = json_encode($results);
+    // $postdata = file_get_contents('php://input'); 
 
 
 
-$input = file_get_contents('php://input'); 
-$data = json_decode($input, true); 
-$message = array(); 
-if($data['action'] == "insert"){
-    $hours = $data['hours']; 
-    $min = $data['min']; 
-    $second = $data['second']; 
+$sql = "SELECT * FROM `recordrunning` WHERE `recordrunning_hours` = 21 AND `recordrunning_min` = 12 ";
 
-    $q = mysqli_query($con, "INSERT INTO recordrunning ( recordrunning_hours, recordrunning_min,recordrunning_second ) VALUES ($hours, $min, $second)"); 
-    if($q){
-    $message['status'] = "success"; 
+$result = mysqli_query($con,$sql);
+
+
+
+$numrow = mysqli_num_rows($result);
+
+if($numrow == 1 ){
+    $arr = array();
+    while($row = mysqli_fetch_assoc($result)){
+        $arr[] = $row;
     }
-    else{
-    $message['status'] = "error"; 
-    }
-    echo json_encode($message); 
+
+    echo json_encode($arr);
+    mysqli_close($conn);
+}else{
+    echo json_encode(null);
 }
-echo mysqli_error($conn); 
 
 
 ?>
