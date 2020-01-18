@@ -16,7 +16,7 @@
    $dbName = "triamrun";
   
 	$link = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-   mysqli_set_charset($con,'utf8');
+   mysqli_set_charset($link,'utf8');
 
 	// if (mysqli_connect_errno())
 	// { 

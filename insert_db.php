@@ -8,14 +8,21 @@ $link = mysqli_connect('localhost', 'root', '', 'triamrun');
 mysqli_set_charset($link, 'utf8');
 
 // include_once '../triamrun/connentDB.php';
+var_dump( file_get_contents('php://input'));
+
+$contentdata = file_get_contents('php://input');
+$postdata = json_decode($contentdata);
+
+var_dump($postdata);
+
+$hours = $postdata->hours;
+$min = $postdata->min;
+$second = $postdata->second;
 
 
 
-$hours = $_POST['hoursData'];
-$min = $_POST['minData'];
-$second = $_POST['secondData'];
-
-$sql = "INSERT INTO `recordrunning` (`recordrunning_hours`, `recordrunning_min`, `recordrunning_second`) VALUES ($hours,$min,$second);";
+$sql = "INSERT INTO `recordrun_seg` (`recordrun_seg_hours`, `recordrun_seg_min`, `recordrun_seg_second`) 
+VALUES ($hours,$min,$second)";
 
 $result = mysqli_query($link,$sql);
 
